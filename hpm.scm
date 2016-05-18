@@ -1,4 +1,4 @@
-(use matchable doodle random-mtzig) ; doodle-colors)
+(use matchable doodle random-mtzig sdl-base) ; doodle-colors)
 
 (define red '(1 0 0 0.3))
 
@@ -69,5 +69,6 @@
 
 (new-doodle title: "HyperPixelMan" background: solid-black)
 (run-event-loop run-in-background: #t minimum-wait: (/ 1 60))
+(sdl-enable-key-repeat SDL_DEFAULT_REPEAT_DELAY SDL_DEFAULT_REPEAT_INTERVAL)
 
 

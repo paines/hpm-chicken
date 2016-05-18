@@ -1,0 +1,28 @@
+;;;; sdl-base.setup -*- Scheme -*-
+
+(let* ((escape-flags (lambda (fs)
+		       (map
+			(lambda (s) (if (not (or (string-prefix-ci? "-l" s)
+						 (string-prefix-ci? "-i" s)
+						 (string-prefix-ci? "-d" s)))
+					(sprintf " -C ~a " s)
+					(sprintf " ~a " s)))
+			(string-split fs))))
+       (sdl-cflags (apply string-append
+			  (escape-flags
+			   (with-input-from-pipe "sdl-config --cflags" read-line))))
+       (sdl-lflags (apply string-append
+			  (escape-flags
+			   (with-input-from-pipe "sdl-config --libs" read-line))))
+       (types? (version>=? (chicken-version) "4.7.4"))
+       (files (append '("sdl-base.so"
+			"sdl-base.import.so"
+			"sdl-base-foreign-types-include.scm")
+		      (if types? '("sdl-base.types") '()))))
+  
+  (compile ,@(if types? '(-emit-type-file sdl-base.types) '())
+	   -v -s -O3 -d1 sdl-base.scm -j sdl-base ,sdl-cflags ,sdl-lflags)
+  (compile -s -O3 -d0 sdl-base.import.scm ,sdl-cflags ,sdl-lflags)
+
+  (install-extension 'sdl-base files '((version "0.1"))))
+

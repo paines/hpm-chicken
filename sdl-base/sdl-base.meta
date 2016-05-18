@@ -1,0 +1,16 @@
+;;; sdl-base.meta -*- scheme -*-
+
+((category graphics)
+ (author "")
+ (synopsis "Basic SDL support")
+ (license "LGPL-2.1")
+ (doc-from-wiki)
+ (egg "sdl-base.egg")
+ (files "sdl-base.meta"
+	"sdl-base.scm"
+	"sdl-base.setup"
+	"COPYING"
+	"Makefile"
+	"test-heap.scm"
+	"heap.scm"
+	"timer.scm"))
