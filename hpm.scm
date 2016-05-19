@@ -1,4 +1,5 @@
-(use matchable doodle random-mtzig sdl-base) ; doodle-colors)
+(use matchable doodle sdl-base) ; doodle-colors)
+(use (prefix random-mtzig random-mtzig:))
 
 (define red '(1 0 0 0.3))
 
@@ -7,7 +8,7 @@
 (define *x-offset* 5)
 (define *y-offset* 5)
 
-(define st (init 24))
+(define st (random-mtzig:init 24))
 
 (world-inits
  (lambda ()
@@ -62,7 +63,7 @@
 	 (else (void))))
      events)
     (clear-screen)
-    (set! *color* (list (randu! st)  (randu! st)  (randu! st)  (randu! st)))
+    (set! *color* (list (random-mtzig:randu! st)  (random-mtzig:randu! st)  (random-mtzig:randu! st)  (random-mtzig:randu! st)))
     (for-each (lambda (rect)
 		(draw-rect rect))
 	      *sprites*)))
